@@ -27,7 +27,7 @@ export const personalInfo = {
   linkedin: 'https://www.linkedin.com/in/munishupadhyay09/',
   leetcode: 'https://leetcode.com/u/Munish_01',
   hackerrank: 'https://www.hackerrank.com/profile/munishupadhyay11',
-  resume: '/Munish_v5.pdf' // Updated to latest PDF file path
+  resume: 'Munish_v5.pdf', // Updated to latest PDF file path without leading slash for relative resolving
 };
 
 export const skills = [

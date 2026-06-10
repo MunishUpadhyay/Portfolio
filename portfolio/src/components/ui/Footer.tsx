@@ -173,9 +173,7 @@ export const Footer = ({ setCurrentPage }: FooterProps) => {
               </button>
               <a
                 href={personalInfo.resume}
-                download
-                target="_blank"
-                rel="noreferrer"
+                download="Munish_Upadhyay_CV.pdf"
                 className="flex items-center gap-2.5 hover:text-purple-400 hover:translate-x-1 transition-all duration-300 text-left cursor-pointer w-full"
               >
                 <FiDownload className="text-purple-400 shrink-0" />
