@@ -5,6 +5,7 @@ export interface Project {
   technologies?: string[]; // Added to match ProjectCard usage
   github: string;
   live: string;
+  colab?: string; // Colab notebook link
   image?: string;
   category?: string;
   schematicId?: string;
@@ -25,6 +26,7 @@ export const personalInfo = {
   github: 'https://github.com/MunishUpadhyay',
   linkedin: 'https://linkedin.com/in/munish-upadhyay-747171286',
   leetcode: 'https://leetcode.com/u/Munish_01',
+  hackerrank: 'https://www.hackerrank.com/profile/munishupadhyay11',
   resume: '/Munish_v4.pdf' // Updated to latest PDF file path
 };
 
@@ -76,15 +78,15 @@ export const skills = [
 
 export const education = [
   {
-    period: 'Sep. 2023 – May 2027',
+    period: 'Sep 2023 – May 2027',
     degree: 'B.Tech in Computer Science & Engineering',
     institution: 'VIT Bhopal University',
     field: 'CGPA: 9.13',
     cgpa: '9.13 CGPA',
-    coursework: 'Data Structures & Algorithms, OOP, DBMS, Operating Systems, Machine Learning, Artificial Intelligence'
+    coursework: 'Data Structures & Algorithms, OOP, DBMS, Operating Systems, Computer Networks, Software Engineering, Machine Learning, Artificial Intelligence'
   },
   {
-    period: '2021 - 2022',
+    period: '2021 – 2022',
     degree: 'Class 12th (Senior Secondary)',
     institution: 'Modern Public School, Delhi',
     field: 'Percentage: 87%',
@@ -92,12 +94,12 @@ export const education = [
     coursework: 'Physics, Chemistry, Mathematics, Computer Science'
   },
   {
-    period: '2019 - 2020',
+    period: '2019 – 2020',
     degree: 'Class 10th (Secondary)',
     institution: 'Modern Public School, Delhi',
     field: 'Percentage: 95%',
     cgpa: '95%',
-    coursework: 'Mathematics, Science, Social Studies, English, Hindi'
+    coursework: 'Mathematics, Science, Computer Science, English'
   }
 ];
 
@@ -105,22 +107,22 @@ export const experience = [
   {
     role: 'Artificial Intelligence Intern',
     company: 'Coding Jr.',
-    period: 'Jun 2025 - Aug 2025',
-    description: '• Designed and optimized supervised machine learning models using Python, Scikit-learn, and Pandas for feature engineering, preprocessing, and hyperparameter tuning, achieving up to 15% accuracy improvement.\n• Deployed and served trained models as scalable RESTful APIs on Render and AWS, reducing inference latency by 30% and enabling production-grade, low-latency model deployment for end users.\n• Engineered automated model evaluation pipelines using Python, Scikit-learn, and Jupyter Notebooks, cutting manual QA time by 40% and accelerating research-to-deployment cycles.\n• Managed version control using Git/GitHub, collaborating cross-functionally to convert 3 research prototypes into production-ready deployments, improving team delivery velocity by 20%.',
-    tech: ['Python', 'Scikit-learn', 'Machine Learning', 'Cloud Deployment', 'APIs', 'Agile']
+    period: 'Jun 2025 – Aug 2025',
+    description: '• Designed and optimized supervised machine learning models using Python, Scikit-learn, and Pandas for feature engineering, preprocessing, and hyperparameter tuning, achieving up to 15% accuracy improvement.\n• Deployed and served trained models as scalable RESTful APIs on Render and AWS, reducing inference latency by 30% and enabling production-grade, low-latency model deployment for end users.\n• Engineered automated model evaluation pipelines using Python, Scikit-learn, and Jupyter Notebooks, cutting manual QA time by 40% and accelerating research-to-deployment cycles.\n• Managed version control using Git/GitHub; converted 3 research prototypes into production-ready deployments within an Agile sprint workflow, improving team delivery velocity by 20%.',
+    tech: ['Python', 'Scikit-learn', 'Machine Learning', 'AWS', 'REST APIs', 'Render', 'Agile']
   }
 ];
 
 export const projects: Project[] = [
   {
-    title: 'Prahari — Real-time Civic Intelligence & Response System',
+    title: 'Prahari — Real-time Civic Incident Triage Platform',
     description: 'Architected a real-time civic incident triage platform across 3 civic domains with a 5-Agent LLM pipeline (Groq LLaMA 3.3 70B / 3.1 8B). Engineered a RAG pipeline using ChromaDB and Sentence Transformers for semantic retrieval, and streamed live incident updates via WebSockets.',
     tech: ['Python', 'Django', 'Django REST Framework', 'Celery', 'Redis', 'Django Channels', 'PostgreSQL', 'ChromaDB', 'Groq LLM', 'Sentence Transformers'],
     technologies: ['Python', 'Django', 'Celery', 'Redis', 'PostgreSQL', 'ChromaDB'],
     github: 'https://github.com/MunishUpadhyay/Prahari',
     live: 'https://prahari-zbgm.onrender.com/',
     image: './projects/crop.jpg',
-    category: 'AI & NLP',
+    category: 'MULTI-AGENT AI',
     schematicId: 'prahari'
   },
   {
@@ -141,6 +143,7 @@ export const projects: Project[] = [
     technologies: ['Python', 'PyTorch', '3D U-Net', 'Nibabel', 'NumPy'],
     github: 'https://github.com/MunishUpadhyay/Brain-Tumor-Segmentation-BraTS-2020-Dataset',
     live: '',
+    colab: 'https://colab.research.google.com/github/MunishUpadhyay/Brain-Tumor-Segmentation-BraTS-2020-Dataset/blob/main/train_brats2020.ipynb',
     image: './projects/expense.jpg',
     category: 'Computer Vision',
     schematicId: 'tumor'
@@ -168,6 +171,17 @@ export const projects: Project[] = [
     schematicId: 'legal'
   },
   {
+    title: '3D Interactive Developer Portfolio',
+    description: 'A modern, high-performance developer portfolio featuring interactive 3D particle systems and a responsive skills constellation powered by React Three Fiber, Three.js, and Framer Motion. Integrates a custom circuit-board tech tree, dynamic LeetCode API metrics, and obsidian glassmorphic card layouts.',
+    tech: ['React.js', 'Three.js', 'React Three Fiber', 'Tailwind CSS', 'Framer Motion', 'TypeScript', 'Vite'],
+    technologies: ['React.js', 'Three.js', 'Tailwind CSS', 'TypeScript'],
+    github: 'https://github.com/MunishUpadhyay/Portfolio',
+    live: '',
+    image: './projects/portfolio.jpg',
+    category: 'Frontend & 3D Web',
+    schematicId: 'portfolio'
+  },
+  {
     title: 'Multiple Disease Prediction System',
     description: 'Designed an interactive machine learning dashboard utilizing Support Vector Machine (SVM) and Logistic Regression models to predict Diabetes, Heart Disease, and Parkinson\'s Disease. Integrated clinical parameters and acoustic voice analysis features (jitter, shimmer, and pitch entropy) for high-accuracy diagnostic predictions.',
     tech: ['Python', 'Scikit-learn', 'Pandas', 'Streamlit', 'Streamlit Cloud', 'NumPy', 'Seaborn'],
@@ -184,20 +198,20 @@ export const projects: Project[] = [
     tech: ['Python', 'Scikit-learn', 'Pandas', 'Streamlit', 'Flask', 'Weather API', 'Render'],
     technologies: ['Python', 'Scikit-learn', 'Pandas', 'Streamlit', 'Flask'],
     github: 'https://github.com/MunishUpadhyay/Smart-Crop-Recommendation-System',
-    live: 'https://smart-crop-recommendation-system-dqh0.onrender.com/',
+    live: 'https://smart-crop-recommendation-system-oc1j.onrender.com/',
     image: './projects/crop.jpg',
     category: 'Machine Learning',
     schematicId: 'crop'
   },
   {
     title: 'Expense Splitter Application',
-    description: 'Full-stack splitwise clone with Java-based desktop application for trip-wise expense tracking.',
+    description: 'Splitwise-inspired desktop application built in Java with real-time transaction settlement, MVC/DAO architecture, and MySQL persistence via JDBC. Supports multi-user concurrent access and trip-wise expense grouping.',
     tech: ['Java', 'JDBC', 'MySQL', 'Swing/UI'],
     technologies: ['Java', 'JDBC', 'MySQL', 'Swing'],
     github: 'https://github.com/MunishUpadhyay/Splitwise',
     live: '',
     image: './projects/expense.jpg',
-    category: 'Full Stack',
+    category: 'Full Stack | Desktop App',
     schematicId: 'splitter'
   }
 ];
@@ -206,15 +220,15 @@ export const certifications = [
   {
     title: 'Computer Networking',
     issuer: 'Coursera',
-    date: 'Aug 2024',
-    description: 'Comprehensive networking fundamentals course covering IP addressing, TCP/IP protocols, routing mechanisms, and DNS resolution.',
+    date: 'Nov 2025',
+    description: 'Comprehensive networking fundamentals covering IP addressing, TCP/IP protocols, routing, DNS resolution, and OSI model concepts.',
     link: 'https://drive.google.com/file/d/14U7FOBcHUc3cdasft1cebSRDCzokoltT/view',
     color: '#06b6d4'
   },
   {
     title: 'Introduction to Machine Learning',
     issuer: 'NPTEL',
-    date: 'Apr 2024',
+    date: 'Apr 2025',
     description: 'Core ML algorithms, supervised and unsupervised learning, model evaluation techniques, and hands-on Python implementation.',
     link: 'https://drive.google.com/file/d/1ULUUNHSop1djGvZHy29W1BkfEHEDBlXF/view',
     color: '#10b981'
@@ -222,9 +236,9 @@ export const certifications = [
   {
     title: 'Marketing Analytics',
     issuer: 'NPTEL',
-    date: 'Oct 2024',
+    date: 'Apr 2026',
     description: 'Data-driven marketing strategies, customer segmentation, predictive modeling, campaign performance analysis, and ROI optimization using statistical and machine learning techniques.',
-    link: '',
+    link: 'https://drive.google.com/file/d/1ZaNpaJnpYeU5HKpl_3rzy320HK9Dl-Iq/view?usp=sharing',
     color: '#d946ef'
   }
 ];

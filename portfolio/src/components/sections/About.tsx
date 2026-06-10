@@ -77,7 +77,7 @@ ranking: Top 25% of active monthly coders`
   }, [activeCmd, commands]);
 
   return (
-    <section id="about" className="pt-16 md:pt-20 pb-20 md:pb-24 w-full px-6 bg-[#03030c]/30 relative z-10 overflow-hidden">
+    <section id="about" className="pt-12 md:pt-16 pb-12 md:pb-16 w-full px-6 bg-[#03030c]/30 relative z-10 overflow-hidden">
       {/* Background radial glow */}
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 
@@ -290,7 +290,7 @@ ranking: Top 25% of active monthly coders`
                   Portfolio Size
                 </span>
                 <span className="text-2xl md:text-3xl font-black text-white block mb-1">
-                  3 Main Projects
+                  10+ Projects
                 </span>
                 <span className="text-xs text-cyan-400 font-semibold truncate w-full">
                   Full Stack & AI

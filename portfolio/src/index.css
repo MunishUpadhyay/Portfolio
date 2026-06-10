@@ -33,6 +33,10 @@
   body {
     @apply font-outfit antialiased text-foreground bg-[#03030c] overflow-x-hidden;
   }
+
+  canvas {
+    background-color: #03030c !important;
+  }
 }
 
 @layer components {

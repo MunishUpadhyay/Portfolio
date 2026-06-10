@@ -271,7 +271,7 @@ export const Skills = ({ preview = false, setCurrentPage }: SkillsProps) => {
     .filter(Boolean);
 
   return (
-    <section id="skills" className={`pt-16 md:pt-20 ${preview ? 'pb-16 md:pb-20' : 'pb-20 md:pb-24'} w-full px-6 bg-[#03030c]/10 relative z-10 overflow-hidden`}>
+    <section id="skills" className="pt-12 md:pt-16 pb-12 md:pb-16 w-full px-6 bg-[#03030c]/10 relative z-10 overflow-hidden">
       {/* Top Divider with Indigo Glow (only on Home page stacked context) */}
       {preview && (
         <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />

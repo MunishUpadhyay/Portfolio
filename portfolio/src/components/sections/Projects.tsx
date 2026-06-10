@@ -143,6 +143,20 @@ const SplitterSchematic = () => (
   </svg>
 );
 
+// Custom SVG 3D Cube / Grid Schematic for Portfolio website
+const PortfolioSchematic = () => (
+  <svg className="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="38" stroke="#3b82f6" strokeWidth="0.75" strokeDasharray="3,3" />
+    <path d="M50 22 L78 36 L78 64 L50 78 L22 64 L22 36 Z" stroke="#3b82f6" strokeWidth="1.2" />
+    <path d="M50 22 L50 78" stroke="#3b82f6" strokeWidth="1" strokeDasharray="1,1" />
+    <path d="M22 36 L50 50 L78 36" stroke="#3b82f6" strokeWidth="1" />
+    <path d="M50 50 L50 78" stroke="#3b82f6" strokeWidth="1.2" />
+    <path d="M22 64 L50 50 L78 64" stroke="#3b82f6" strokeWidth="1" strokeDasharray="1,1" />
+    <circle cx="50" cy="50" r="3" fill="#3b82f6" className="animate-pulse" />
+  </svg>
+);
+
+
 export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => {
   const [activeTab, setActiveTab] = useState<'all' | 'ai' | 'fullstack' | 'core'>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -217,6 +231,7 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
       case 'crop': return <CropSchematic />;
       case 'tumor': return <MriSchematic />;
       case 'splitter': return <SplitterSchematic />;
+      case 'portfolio': return <PortfolioSchematic />;
       default: return <SplitterSchematic />;
     }
   };
@@ -231,6 +246,7 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
       case 'crop': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
       case 'tumor': return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
       case 'splitter': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+      case 'portfolio': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
       default: return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
     }
   };
@@ -245,6 +261,7 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
       case 'crop': return '#10b981';
       case 'tumor': return '#6366f1';
       case 'splitter': return '#3b82f6';
+      case 'portfolio': return '#3b82f6';
       default: return '#3b82f6';
     }
   };
@@ -259,12 +276,13 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
       case 'crop': return '0 12px 30px -5px rgba(16, 185, 129, 0.25)';
       case 'tumor': return '0 12px 30px -5px rgba(99, 102, 241, 0.25)';
       case 'splitter': return '0 12px 30px -5px rgba(59, 130, 246, 0.25)';
+      case 'portfolio': return '0 12px 30px -5px rgba(59, 130, 246, 0.25)';
       default: return '0 12px 30px -5px rgba(59, 130, 246, 0.25)';
     }
   };
 
   return (
-    <section id="projects" className={`pt-16 md:pt-20 ${preview ? 'pb-16 md:pb-20' : 'pb-20 md:pb-24'} w-full px-6 bg-[#03030c]/20 relative z-10 overflow-hidden`}>
+    <section id="projects" className={`pt-12 md:pt-16 ${preview ? 'pb-16 md:pb-20' : 'pb-12 md:pb-16'} w-full px-6 bg-[#03030c]/20 relative z-10 overflow-hidden`}>
       {/* Top Divider with Blue Glow (only on Home page stacked context) */}
       {preview && (
         <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
@@ -351,10 +369,10 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
           </div>
         )}
 
-        {/* Project Card Grid */}
+        {/* Project Card Grid / Flex Centered Layout */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="flex flex-wrap justify-center gap-6"
         >
           <AnimatePresence mode="popLayout">
             {displayedProjects.map((project) => (
@@ -374,7 +392,7 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
               style={{
                 transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
               }}
-              className="group relative obsidian-card bg-[#0e1026]/95 border-2 border-zinc-800/50 shadow-[0_8px_30px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden flex flex-col justify-between h-full p-6"
+              className="group relative obsidian-card bg-[#0e1026]/95 border-2 border-zinc-800/50 shadow-[0_8px_30px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden flex flex-col justify-between p-6 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] min-h-[420px]"
             >
               {/* Subtle back corner glow on hover */}
               <div 
@@ -410,9 +428,16 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
                   </div>
 
                   {/* Category Pill */}
-                  <span className={`px-2.5 py-1 rounded-md text-[10px] md:text-xs font-semibold uppercase tracking-wider border ${getBadgeColor(project.schematicId)}`}>
-                    {project.category || 'Project'}
-                  </span>
+                  <div className="flex flex-wrap gap-1.5 justify-end">
+                    {(project.category || 'Project').split('|').map((cat) => (
+                      <span
+                        key={cat}
+                        className={`px-2.5 py-1 rounded-md text-[10px] md:text-xs font-semibold uppercase tracking-wider border ${getBadgeColor(project.schematicId)}`}
+                      >
+                        {cat.trim()}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Title */}
@@ -455,7 +480,7 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
                 </div>
 
                 {/* Action Links */}
-                <div className="flex items-center gap-6 pt-4 border-t-2 border-zinc-800/50 text-sm font-semibold">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-4 border-t-2 border-zinc-800/50 text-sm font-semibold">
                   {project.github && (
                     <a
                       href={project.github}
@@ -464,6 +489,20 @@ export const Projects = ({ preview = false, setCurrentPage }: ProjectsProps) => 
                       className="inline-flex items-center gap-1 group/link text-foreground/75 hover:text-white transition-all duration-200"
                     >
                       <span>Source Code</span>
+                      <FiArrowRight 
+                        className="group-hover/link:translate-x-1 transition-transform duration-200"
+                        style={{ color: getBorderColor(project.schematicId) }}
+                      />
+                    </a>
+                  )}
+                  {project.colab && (
+                    <a
+                      href={project.colab}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 group/link text-foreground/75 hover:text-white transition-all duration-200"
+                    >
+                      <span>View on Colab</span>
                       <FiArrowRight 
                         className="group-hover/link:translate-x-1 transition-transform duration-200"
                         style={{ color: getBorderColor(project.schematicId) }}

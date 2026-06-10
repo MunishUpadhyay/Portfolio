@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { personalInfo } from '../../data/portfolio';
 import { FiMail, FiSend, FiCopy, FiCheck, FiLinkedin, FiGithub } from 'react-icons/fi';
+import { SiLeetcode } from 'react-icons/si';
+import { FaHackerrank } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
   const [copied, setCopied] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const copyEmail = () => {
@@ -23,17 +27,71 @@ export const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
+
+    // Client-side validation
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const subject = formData.subject.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !subject || !message) {
       toast.error('All form fields are required.');
+      return;
+    }
+
+    if (name.length < 2) {
+      toast.error('Name must be at least 2 characters long.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+
+    if (message.length < 10) {
+      toast.error('Message must be at least 10 characters long.');
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      // Check if keys are set (if not, fallback to simulation so the app is always functional)
+      if (
+        serviceId && 
+        templateId && 
+        publicKey && 
+        !serviceId.includes('your_') && 
+        !templateId.includes('your_') && 
+        !publicKey.includes('your_')
+      ) {
+        // Send email using @emailjs/browser SDK
+        await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message,
+          },
+          publicKey
+        );
+      } else {
+        // Fallback simulation mode
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
+
       toast.success('Message sent successfully! I will respond shortly.');
-      setFormData({ name: '', email: '', message: '' });
-    } catch {
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Email sending error:', error);
       toast.error('Failed to send message. Please email me directly.');
     } finally {
       setIsSubmitting(false);
@@ -41,12 +99,12 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="pt-16 md:pt-20 pb-20 md:pb-24 w-full px-6 bg-[#03030c]/20 relative z-10 overflow-hidden">
+    <section id="contact" className="pt-12 md:pt-16 pb-12 md:pb-16 w-full px-6 bg-[#03030c]/20 relative z-10 overflow-hidden">
 
       {/* Background radial glow */}
       <div className="absolute top-0 right-1/4 w-[450px] h-[450px] bg-pink-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         
         {/* Section Title */}
         <div className="text-center mb-16 flex flex-col items-center">
@@ -58,13 +116,13 @@ export const Contact = () => {
         </div>
 
         {/* Split columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Info specifications */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-5 space-y-6">
             <h3 className="text-2xl font-black text-white leading-tight">Let's Connect</h3>
             <p className="text-base text-foreground/80 leading-relaxed font-normal mb-8">
-              Feel free to reach out if you're looking for a developer, want to discuss a project, or just say hello.
+              Open to full-time roles, collaborations, and interesting projects. Feel free to reach out — I typically respond within 24 hours.
             </p>
 
             <div className="space-y-4">
@@ -92,7 +150,7 @@ export const Contact = () => {
                   style={{ backgroundColor: '#a855f7' }}
                 />
 
-                <div className="flex items-center gap-3 overflow-hidden relative z-10">
+                <div className="flex items-center gap-3 min-w-0 relative z-10 flex-1">
                   <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center border-2 border-purple-500/20 shrink-0">
                     <FiMail />
                   </div>
@@ -100,7 +158,7 @@ export const Contact = () => {
                     <span className="text-xs font-bold text-foreground/45 block tracking-wider uppercase">EMAIL</span>
                     <a
                       href={`mailto:${personalInfo.email}`}
-                      className="text-sm font-extrabold text-white hover:text-purple-400 transition-colors truncate block"
+                      className="text-[11px] xs:text-xs sm:text-sm lg:text-[11px] xl:text-sm font-semibold text-white hover:text-purple-400 transition-colors block whitespace-nowrap overflow-hidden text-ellipsis"
                     >
                       {personalInfo.email}
                     </a>
@@ -115,7 +173,7 @@ export const Contact = () => {
               </motion.div>
 
               {/* Social row */}
-              <div className="flex gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <motion.a
                   href={personalInfo.linkedin}
                   target="_blank"
@@ -129,7 +187,7 @@ export const Contact = () => {
                   style={{
                     transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
                   }}
-                  className="group relative flex-1 p-4 rounded-2xl border-2 border-zinc-800/50 bg-[#0e1026]/90 flex items-center justify-center gap-2 text-sm font-semibold text-foreground/75 hover:text-purple-400 transition-all overflow-hidden"
+                  className="group relative p-4 rounded-2xl border-2 border-zinc-800/50 bg-[#0e1026]/90 flex items-center justify-center gap-2 text-sm font-semibold text-foreground/75 hover:text-purple-400 transition-all overflow-hidden"
                 >
                   {/* Cyber dot-grid pattern */}
                   <div 
@@ -141,7 +199,7 @@ export const Contact = () => {
                     className="absolute -bottom-1.5 left-1/4 w-1/2 h-[2px] rounded-full blur-[6px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     style={{ backgroundColor: '#0077b5' }}
                   />
-                  <FiLinkedin className="relative z-10" />
+                  <FiLinkedin className="relative z-10 text-lg" />
                   <span className="relative z-10">LinkedIn</span>
                 </motion.a>
                 
@@ -158,7 +216,7 @@ export const Contact = () => {
                   style={{
                     transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
                   }}
-                  className="group relative flex-1 p-4 rounded-2xl border-2 border-zinc-800/50 bg-[#0e1026]/90 flex items-center justify-center gap-2 text-sm font-semibold text-foreground/75 hover:text-white transition-all overflow-hidden"
+                  className="group relative p-4 rounded-2xl border-2 border-zinc-800/50 bg-[#0e1026]/90 flex items-center justify-center gap-2 text-sm font-semibold text-foreground/75 hover:text-white transition-all overflow-hidden"
                 >
                   {/* Cyber dot-grid pattern */}
                   <div 
@@ -170,8 +228,66 @@ export const Contact = () => {
                     className="absolute -bottom-1.5 left-1/4 w-1/2 h-[2px] rounded-full blur-[6px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     style={{ backgroundColor: '#ffffff' }}
                   />
-                  <FiGithub className="relative z-10" />
+                  <FiGithub className="relative z-10 text-lg" />
                   <span className="relative z-10">GitHub</span>
+                </motion.a>
+
+                <motion.a
+                  href={personalInfo.leetcode}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{
+                    y: -4,
+                    borderColor: 'rgba(248, 159, 27, 0.8)',
+                    boxShadow: '0 8px 20px -5px rgba(248,159,27,0.2)',
+                    borderWidth: '2px'
+                  }}
+                  style={{
+                    transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                  }}
+                  className="group relative p-4 rounded-2xl border-2 border-zinc-800/50 bg-[#0e1026]/90 flex items-center justify-center gap-2 text-sm font-semibold text-foreground/75 hover:text-amber-500 transition-all overflow-hidden"
+                >
+                  {/* Cyber dot-grid pattern */}
+                  <div 
+                    className="absolute inset-0 bg-[radial-gradient(var(--pattern-color)_1px,transparent_1px)] bg-[size:10px_10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ '--pattern-color': 'rgba(248, 159, 27, 0.15)' } as React.CSSProperties}
+                  />
+                  {/* Underglow */}
+                  <div 
+                    className="absolute -bottom-1.5 left-1/4 w-1/2 h-[2px] rounded-full blur-[6px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ backgroundColor: '#f89f1b' }}
+                  />
+                  <SiLeetcode className="relative z-10 text-lg" />
+                  <span className="relative z-10">LeetCode</span>
+                </motion.a>
+
+                <motion.a
+                  href={personalInfo.hackerrank}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{
+                    y: -4,
+                    borderColor: 'rgba(46, 200, 102, 0.8)',
+                    boxShadow: '0 8px 20px -5px rgba(46,200,102,0.2)',
+                    borderWidth: '2px'
+                  }}
+                  style={{
+                    transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                  }}
+                  className="group relative p-4 rounded-2xl border-2 border-zinc-800/50 bg-[#0e1026]/90 flex items-center justify-center gap-2 text-sm font-semibold text-foreground/75 hover:text-emerald-500 transition-all overflow-hidden"
+                >
+                  {/* Cyber dot-grid pattern */}
+                  <div 
+                    className="absolute inset-0 bg-[radial-gradient(var(--pattern-color)_1px,transparent_1px)] bg-[size:10px_10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ '--pattern-color': 'rgba(46, 200, 102, 0.15)' } as React.CSSProperties}
+                  />
+                  {/* Underglow */}
+                  <div 
+                    className="absolute -bottom-1.5 left-1/4 w-1/2 h-[2px] rounded-full blur-[6px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ backgroundColor: '#2ec866' }}
+                  />
+                  <FaHackerrank className="relative z-10 text-lg" />
+                  <span className="relative z-10">HackerRank</span>
                 </motion.a>
               </div>
             </div>
@@ -191,7 +307,7 @@ export const Contact = () => {
             style={{
               transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
             }}
-            className="group relative lg:col-span-3 obsidian-card bg-[#0e1026]/95 border-2 border-zinc-800/50 shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
+            className="group relative lg:col-span-7 obsidian-card bg-[#0e1026]/95 border-2 border-zinc-800/50 shadow-[0_8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
           >
             {/* Cyber dot-grid pattern */}
             <div 
@@ -203,71 +319,115 @@ export const Contact = () => {
               className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2/3 h-[3px] rounded-full blur-[8px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               style={{ backgroundColor: '#ec4899' }}
             />
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="text-sm font-bold text-foreground/50 uppercase tracking-wider">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="John Doe"
-                    className="w-full bg-zinc-950/40 border-2 border-zinc-900 rounded-xl px-5 py-4 text-sm text-foreground focus:border-purple-500/60 focus:outline-none transition-colors"
-                    required
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="text-sm font-bold text-foreground/50 uppercase tracking-wider">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="john@example.com"
-                    className="w-full bg-zinc-950/40 border-2 border-zinc-900 rounded-xl px-5 py-4 text-sm text-foreground focus:border-purple-500/60 focus:outline-none transition-colors"
-                    required
-                  />
-                </div>
-              </div>
+            <AnimatePresence mode="wait">
+              {isSubmitted ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="p-8 text-center flex flex-col items-center justify-center space-y-6 min-h-[380px]"
+                >
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center border-2 border-emerald-500/20 text-3xl animate-bounce">
+                    <FiCheck />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Message Sent!</h3>
+                  <p className="text-foreground/80 max-w-md text-sm leading-relaxed">
+                    Message sent! I'll get back to you soon.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setIsSubmitted(false)}
+                    className="btn-neon-primary text-xs py-3.5 px-6 rounded-xl mt-4"
+                  >
+                    Send Another Message
+                  </button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="name" className="text-sm font-bold text-foreground/50 uppercase tracking-wider">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="John Doe"
+                        className="w-full bg-zinc-950/40 border-2 border-zinc-900 rounded-xl px-5 py-4 text-sm text-foreground focus:border-purple-500/60 focus:outline-none transition-colors"
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="email" className="text-sm font-bold text-foreground/50 uppercase tracking-wider">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="john@example.com"
+                        className="w-full bg-zinc-950/40 border-2 border-zinc-900 rounded-xl px-5 py-4 text-sm text-foreground focus:border-purple-500/60 focus:outline-none transition-colors"
+                        required
+                      />
+                    </div>
+                  </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="message" className="text-sm font-bold text-foreground/50 uppercase tracking-wider">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Enter your message details..."
-                  className="w-full bg-zinc-950/40 border-2 border-zinc-900 rounded-xl px-5 py-4 text-sm text-foreground focus:border-purple-500/60 focus:outline-none transition-colors resize-none"
-                  required
-                />
-              </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="subject" className="text-sm font-bold text-foreground/50 uppercase tracking-wider">
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="Collaborating on a project"
+                      className="w-full bg-zinc-950/40 border-2 border-zinc-900 rounded-xl px-5 py-4 text-sm text-foreground focus:border-purple-500/60 focus:outline-none transition-colors"
+                      required
+                    />
+                  </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full btn-neon-primary py-4 text-sm font-bold"
-              >
-                {isSubmitting ? (
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <FiSend />
-                    Send Message
-                  </>
-                )}
-              </button>
-            </form>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="message" className="text-sm font-bold text-foreground/50 uppercase tracking-wider">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder="Write your message here..."
+                      className="w-full bg-zinc-950/40 border-2 border-zinc-900 rounded-xl px-5 py-4 text-sm text-foreground focus:border-purple-500/60 focus:outline-none transition-colors resize-none"
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full btn-neon-primary py-4 text-sm font-bold"
+                  >
+                    {isSubmitting ? (
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <FiSend />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </AnimatePresence>
           </motion.div>
 
         </div>

@@ -146,12 +146,6 @@ export const SkillsConstellation = () => {
 
         return (
           <group key={skill.name} position={pos}>
-            {/* Delicate glowing connection node */}
-            <mesh>
-              <sphereGeometry args={[0.04, 8, 8]} />
-              <meshBasicMaterial color={color} />
-            </mesh>
-
             {/* Projected holographic HTML text tag (constant scale for uniform sizing) */}
             <Html center={true}>
               <div

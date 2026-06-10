@@ -27,7 +27,7 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
   };
 
   return (
-    <section id="experience" className="pt-16 md:pt-20 pb-20 md:pb-24 w-full px-6 bg-[#03030c]/30 relative z-10 overflow-hidden">
+    <section id="experience" className="pt-12 md:pt-16 pb-12 md:pb-16 w-full px-6 bg-[#03030c]/30 relative z-10 overflow-hidden">
 
       {/* Background radial glow */}
       <div className="absolute top-0 right-1/3 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
@@ -35,7 +35,7 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
       <div className="max-w-5xl mx-auto">
         
         {/* Section Title */}
-        <div className="text-center mb-16 flex flex-col items-center">
+        <div className="text-center mb-10 flex flex-col items-center">
           <span className="text-xs font-semibold tracking-widest text-purple-400 uppercase block mb-2">
             04. Journey
           </span>
@@ -95,7 +95,18 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
                     {experience[0].role}
                   </h4>
                   <p className="text-sm font-semibold text-purple-400 mb-2">{experience[0].company}</p>
-                  <p className="text-sm text-foreground/80 leading-relaxed font-normal whitespace-pre-line">{experience[0].description}</p>
+                  <ul className="list-none space-y-2 text-sm text-foreground/80 leading-relaxed font-normal text-left">
+                    {experience[0].description.split('\n').map((bullet, index) => {
+                      const cleanedBullet = bullet.replace(/^[•\s\-*]+/, '').trim();
+                      if (!cleanedBullet) return null;
+                      return (
+                        <li key={index} className="flex items-start gap-2.5">
+                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
+                          <span>{cleanedBullet}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               </motion.div>
 
@@ -231,9 +242,18 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
                       <p className="text-sm font-semibold text-purple-400 mb-3">
                         {job.company}
                       </p>
-                      <p className="text-sm text-foreground/80 leading-relaxed font-normal mb-4 whitespace-pre-line">
-                        {job.description}
-                      </p>
+                      <ul className="list-none space-y-2 text-sm text-foreground/80 leading-relaxed font-normal mb-4 text-left">
+                        {job.description.split('\n').map((bullet, index) => {
+                          const cleanedBullet = bullet.replace(/^[•\s\-*]+/, '').trim();
+                          if (!cleanedBullet) return null;
+                          return (
+                            <li key={index} className="flex items-start gap-2.5">
+                              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
+                              <span>{cleanedBullet}</span>
+                            </li>
+                          );
+                        })}
+                      </ul>
 
                       <div className="flex flex-wrap gap-1.5">
                         {job.tech.map((t) => (

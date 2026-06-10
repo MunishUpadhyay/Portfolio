@@ -24,10 +24,18 @@ export const Certifications = () => {
 
   const displayedCerts = getFilteredCertifications();
 
+  const getHoverTextColor = (color?: string) => {
+    if (color === '#06b6d4') return 'group-hover:text-cyan-400';
+    if (color === '#10b981') return 'group-hover:text-emerald-400';
+    if (color === '#d946ef') return 'group-hover:text-fuchsia-400';
+    return 'group-hover:text-purple-400';
+  };
+
+
 
 
   return (
-    <section id="certifications" className="pt-16 md:pt-20 pb-20 md:pb-24 w-full px-6 bg-[#03030c]/10 relative z-10 overflow-hidden">
+    <section id="certifications" className="pt-12 md:pt-16 pb-12 md:pb-16 w-full px-6 bg-[#03030c]/10 relative z-10 overflow-hidden">
 
       {/* Background radial glow */}
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-fuchsia-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
@@ -66,7 +74,7 @@ export const Certifications = () => {
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {displayedCerts.map((cert) => (
+            {displayedCerts.map((cert, idx) => (
               <motion.div
                 key={cert.title}
                 layout
@@ -83,7 +91,9 @@ export const Certifications = () => {
                 style={{
                   transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
                 }}
-                className="group relative obsidian-card bg-[#0e1026]/95 border-2 border-zinc-800/50 shadow-[0_8px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between"
+                className={`group relative obsidian-card bg-[#0e1026]/95 border-2 border-zinc-800/50 shadow-[0_8px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[240px] ${
+                  idx === displayedCerts.length - 1 && idx % 2 === 0 ? 'md:col-span-2' : ''
+                }`}
             >
               {/* Subtle back corner glow on hover */}
               <div 
@@ -122,7 +132,7 @@ export const Certifications = () => {
                   </span>
                 </div>
 
-                <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-purple-400 transition-colors mb-3 leading-snug">
+                <h3 className={`text-lg md:text-xl font-bold text-white ${getHoverTextColor(cert.color)} transition-colors mb-3 leading-snug`}>
                   {cert.title}
                 </h3>
                 <p className="text-sm text-foreground/80 font-normal leading-relaxed mb-8">

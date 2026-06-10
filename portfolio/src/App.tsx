@@ -18,14 +18,23 @@ export type PageType = 'home' | 'about' | 'skills' | 'projects' | 'experience' |
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>(() => {
-    const saved = localStorage.getItem('portfolio_page');
+    const saved = sessionStorage.getItem('portfolio_page');
     const validPages: PageType[] = ['home', 'about', 'skills', 'projects', 'experience', 'certifications', 'contact'];
     return validPages.includes(saved as PageType) ? (saved as PageType) : 'home';
   });
 
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const handle = requestAnimationFrame(() => {
+      setLoaded(true);
+    });
+    return () => cancelAnimationFrame(handle);
+  }, []);
+
   // Persist current page on tab switches
   useEffect(() => {
-    localStorage.setItem('portfolio_page', currentPage);
+    sessionStorage.setItem('portfolio_page', currentPage);
   }, [currentPage]);
 
   // Butter-smooth scroll to top on tab changes
@@ -66,6 +75,12 @@ function App() {
     }
   };
 
+  if (!loaded) {
+    return (
+      <div className="fixed inset-0 bg-[#03030c] z-[9999] flex items-center justify-center" />
+    );
+  }
+
   return (
     <div className="relative min-h-screen bg-[#03030c] text-foreground font-outfit overflow-x-hidden selection:bg-purple-500/30 selection:text-white flex flex-col justify-between">
       <Toaster position="top-right" />
@@ -80,7 +95,7 @@ function App() {
       {/* 2. FOREGROUND LAYOUT */}
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       
-      <main className="relative z-10 w-full flex-grow flex items-center justify-center pt-28 pb-12">
+      <main className="relative z-10 w-full flex-grow flex items-center justify-center pt-28 pb-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentPage}
