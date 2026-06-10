@@ -24,10 +24,10 @@ export const personalInfo = {
   age: '21 Years Old',
   email: 'munishupadhyay.workspace@gmail.com',
   github: 'https://github.com/MunishUpadhyay',
-  linkedin: 'https://linkedin.com/in/munish-upadhyay-747171286',
+  linkedin: 'https://www.linkedin.com/in/munishupadhyay09/',
   leetcode: 'https://leetcode.com/u/Munish_01',
   hackerrank: 'https://www.hackerrank.com/profile/munishupadhyay11',
-  resume: '/Munish_v4.pdf' // Updated to latest PDF file path
+  resume: '/Munish_v5.pdf' // Updated to latest PDF file path
 };
 
 export const skills = [
