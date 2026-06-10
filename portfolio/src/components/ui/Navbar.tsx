@@ -21,6 +21,17 @@ export const Navbar = ({ currentPage, setCurrentPage }: NavbarProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks: { name: string; id: PageType }[] = [
     { name: 'Home', id: 'home' },
     { name: 'About', id: 'about' },
@@ -36,8 +47,8 @@ export const Navbar = ({ currentPage, setCurrentPage }: NavbarProps) => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'py-4 bg-zinc-950/80 backdrop-blur-xl border-b-2 border-zinc-900/60 shadow-[0_8px_30px_rgba(3,3,12,0.6)]'
-            : 'py-8 bg-transparent border-transparent'
+            ? 'py-3 md:py-4 bg-zinc-950/80 backdrop-blur-xl border-b-2 border-zinc-900/60 shadow-[0_8px_30px_rgba(3,3,12,0.6)]'
+            : 'py-4 md:py-8 bg-transparent border-transparent'
         }`}
       >
         {/* Animated Bottom Border Indicator */}
@@ -87,7 +98,7 @@ export const Navbar = ({ currentPage, setCurrentPage }: NavbarProps) => {
               className="p-2.5 rounded-xl bg-gradient-to-r from-purple-600/10 to-indigo-600/10 border-2 border-purple-500/30 backdrop-blur-sm transition-all duration-300 hover:scale-105"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <FiX className="text-xs" /> : <FiMenu className="text-xs" />}
+              {mobileMenuOpen ? <FiX className="text-lg" /> : <FiMenu className="text-lg" />}
             </button>
           </div>
         </div>
@@ -97,13 +108,13 @@ export const Navbar = ({ currentPage, setCurrentPage }: NavbarProps) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -5 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.18 }}
-            className="fixed inset-x-0 top-[68px] z-45 md:hidden bg-zinc-950/95 backdrop-blur-xl border-b-2 border-zinc-900 p-5 flex flex-col gap-3 shadow-2xl shadow-purple-500/5 animate-fade-in"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+            className="fixed inset-0 z-40 md:hidden bg-[#03030c]/98 backdrop-blur-2xl pt-24 px-6 pb-8 flex flex-col justify-between overflow-y-auto"
           >
-            <nav className="flex flex-col gap-1.5">
+            <nav className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
@@ -111,9 +122,9 @@ export const Navbar = ({ currentPage, setCurrentPage }: NavbarProps) => {
                     setCurrentPage(link.id);
                     setMobileMenuOpen(false);
                   }}
-                  className={`text-sm font-semibold py-2.5 border-b-2 border-zinc-900/60 text-left transition-colors ${
+                  className={`text-base font-bold py-3.5 border-b border-zinc-900/40 text-left transition-all duration-300 ${
                     currentPage === link.id
-                      ? 'text-purple-400 border-l-4 border-purple-500/80 pl-3 bg-purple-500/5 rounded-r-lg'
+                      ? 'text-purple-400 border-l-4 border-purple-500 pl-3 bg-purple-500/5 rounded-r-lg text-neon-glow'
                       : 'text-foreground/75 hover:text-white pl-1'
                   }`}
                 >
@@ -121,6 +132,9 @@ export const Navbar = ({ currentPage, setCurrentPage }: NavbarProps) => {
                 </button>
               ))}
             </nav>
+            <div className="pt-6 border-t border-zinc-900/40 text-center text-xs font-semibold text-foreground/40">
+              © {new Date().getFullYear()} {personalInfo.name}. All rights reserved. ✨
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

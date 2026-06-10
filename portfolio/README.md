@@ -1,168 +1,143 @@
-# Modern Portfolio Website
+# 🚀 3D Interactive Developer Portfolio
 
-A beautiful, interactive portfolio website built with React, TypeScript, and Framer Motion.
+Welcome to my interactive 3D developer portfolio! This web application is a premium, results-oriented showcase of my engineering expertise in backend systems, AI/ML architectures, and full-stack software development. It features immersive WebGL components, an interactive schematic circuit board, and real-time integration setups.
 
-## Features
+---
 
-✨ **Interactive Elements**
-- Smooth scroll animations
-- Theme switcher (Light/Dark mode)
-- Working contact form with email integration
-- Animated transitions and hover effects
+## ✨ Core Features
 
-📧 **Contact Form**
-- Real email delivery using EmailJS
-- Form validation
-- Success/error notifications
-- Professional email templates
+### 🌌 1. 3D Interactive Skills Constellation (WebGL)
+*   **Immersive Stardust Sphere**: A custom Three.js and React Three Fiber (R3F) interactive sphere featuring floating connection nodes and orbiting particles.
+*   **Responsive Resource Management**: Dynamically mounts/unmounts WebGL elements based on screen width (`window.innerWidth >= 1024px`), preventing context lost errors and minimizing CPU/GPU load on mobile devices.
+*   **Aesthetic Integration**: Implements transparent, glowing glassmorphic text labels and orbital control physics.
 
-🎨 **Modern Design**
-- Gradient effects and glassmorphism
-- Responsive design for all devices
-- Custom scrollbar
-- Beautiful typography
+### 🔌 2. Skill Blueprint Circuit Board
+*   **Visual Logic Flows**: An SVG schematic graph that renders custom category connection traces (e.g. `C++` leading to `PyTorch`/`TensorFlow` and `React` tracing to `Vercel`/`CI/CD`), modeling a modern software pipeline.
+*   **Domain-Specific Color Accents**: Features individual glowing badges and highlights mapping Web/DB and AI/ML capabilities.
+*   **Fully Responsive Scaling**: Responsive dimension calculations prevent text overflowing or clipping on smaller devices.
 
-📱 **Sections**
-- Hero with animated introduction
-- About Me with skill badges
-- Education timeline
-- Skills & Technologies
-- Projects showcase with live links
-- Contact form
+### 📊 3. Live LeetCode Solver Counter
+*   **Dynamic Data Fetching**: Retrieves problem statistics in real-time from my LeetCode profile using Faisal Shohag's API wrapper.
+*   **Local Fallback Mechanism**: Gracefully falls back to a preset stat count if the API is offline or rate-limited, keeping the user interface populated.
 
-## Getting Started
+### 🖥️ 4. Interactive UNIX Terminal Simulator
+*   **Command Simulator**: A fully functional retro-neon command terminal supporting standard shell actions:
+    *   `help`: View list of available commands.
+    *   `about`: Display biography summary.
+    *   `skills`: List core technical competencies.
+    *   `experience`: Show professional work timeline.
+    *   `leetcode`: Output live solved problems status.
+    *   `clear`: Wipe the terminal history.
+*   **Typing Animation**: Safe animation rendering that eliminates character trailing bugs during closure updates.
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
+### 📧 5. Secure EmailJS Integration
+*   **Direct-from-Client Delivery**: Powered by the official `@emailjs/browser` SDK.
+*   **Client-Side Validation**: Performs format checking, text trimming, and minimum length checks for name and message fields.
+*   **Submit Protection**: Disables the submit CTA and displays an active loading state during transit.
+*   **Success Toast Notification**: Displays a checkmark toast and resets input fields on successful delivery.
+*   **Mock Fallback Loop**: Integrates a local mock sandbox loop for easy local testing when API keys are undefined.
 
-### Installation
+---
 
-1. Clone the repository
+## 🛠️ Technology Stack
+
+*   **Core**: React 19, Vite, TypeScript
+*   **Styling**: Tailwind CSS (Utility classes & custom animations)
+*   **3D Graphics**: Three.js, `@react-three/fiber` (R3F), `@react-three/drei`
+*   **Animations**: Framer Motion (page transitions, mobile menu slide-ins)
+*   **Form Handling & Delivery**: EmailJS Browser SDK
+*   **Icons**: `react-icons` (Feather Icons, Simple Icons, FontAwesome)
+*   **Notifications**: `react-hot-toast`
+
+---
+
+## 📁 Project Structure
+
+```text
+portfolio/
+├── public/                 # Static assets (Favicon, CV PDF)
+│   └── Munish_v5.pdf       # My latest developer CV
+├── src/
+│   ├── components/
+│   │   ├── 3d/             # Three.js / WebGL components (Constellation, Globe, Canvas)
+│   │   ├── sections/       # Modular page tabs (About, Projects, Experience, Skills, Certifications, Contact)
+│   │   └── ui/             # Global layout elements (Navbar, Footer)
+│   ├── data/
+│   │   └── portfolio.ts    # Main dataset configuration (projects, credentials, info)
+│   ├── App.tsx             # Root React component (Tab router and state controller)
+│   ├── index.css           # Global theme colors and Tailwind configurations
+│   └── main.tsx            # Application entry point
+├── .env                    # Environment keys (Ignored by Git)
+├── package.json            # Active dependencies registry
+└── vite.config.ts          # Vite configuration details
+```
+
+---
+
+## ⚙️ Environment Configuration
+
+To set up the contact form email delivery system, create a `.env` file inside the `portfolio/` directory:
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
+VITE_EMAILJS_ADMIN_TEMPLATE_ID=your_emailjs_admin_template_id
+VITE_EMAILJS_GREETING_TEMPLATE_ID=your_emailjs_greeting_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
+```
+
+*Note: If these variables are not declared, the contact form will automatically fall back to local UI simulation.*
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+*   Node.js (v18.0.0 or higher)
+*   npm or yarn package manager
+
+### 2. Local Installation
+
 ```bash
-git clone <your-repo-url>
+# Clone the repository
+git clone https://github.com/MunishUpadhyay/Portfolio.git
+
+# Enter project folder
 cd portfolio
-```
 
-2. Install dependencies
-```bash
+# Install dependencies
 npm install
-```
 
-3. Run the development server
-```bash
+# Run development server
 npm run dev
 ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser
+### 3. Open Browser
+Navigate to [http://localhost:5173](http://localhost:5173) in your browser.
 
-## Customization
+---
 
-### 1. Personal Information
+## 📦 Production & Deployment
 
-Edit `src/App.tsx` and update:
-- Your name in the hero section
-- About me description
-- Education details
-- Skills and technologies
-- Projects with GitHub and live demo links
-- Contact information
-
-### 2. Email Setup
-
-To enable the contact form:
-1. Create a free account at [EmailJS](https://www.emailjs.com/)
-2. Set up an email service
-3. Create an email template
-4. Get your Service ID, Template ID, and Public Key
-5. Update these values in `src/App.tsx` (around line 35)
-
-See `EMAIL_SETUP.md` for detailed instructions.
-
-### 3. Resume
-
-Place your resume PDF in the `public` folder as `resume.pdf`, or update the link in the hero section.
-
-### 4. Theme Colors
-
-To change the color scheme, edit the CSS variables in `src/index.css`:
-```css
---accent-primary: #667eea;
---accent-secondary: #764ba2;
-```
-
-### 5. Social Links
-
-Update your social media links in the contact section of `src/App.tsx`:
-- GitHub
-- LinkedIn
-- Twitter
-- Email
-
-## Building for Production
+### Build Command
+Compile and minify code for production:
 
 ```bash
 npm run build
 ```
 
-The build files will be in the `dist` folder, ready to deploy.
+This generates optimized static files inside the `dist/` directory, ready to be deployed.
 
-## Deployment
-
-You can deploy this portfolio to:
-- **Vercel** (Recommended)
-- **Netlify**
-- **GitHub Pages**
-- **Any static hosting service**
-
-### Deploy to Vercel
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. Run: `vercel`
-3. Follow the prompts
-
-Or connect your GitHub repo to Vercel for automatic deployments.
-
-## Technologies Used
-
-- **React** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **Framer Motion** - Animations
-- **EmailJS** - Email functionality
-- **React Icons** - Icon library
-- **React Hot Toast** - Notifications
-
-## Project Structure
-
-```
-portfolio/
-├── public/
-│   └── resume.pdf          # Your resume (add this)
-├── src/
-│   ├── App.tsx            # Main component
-│   ├── App.css            # Styles
-│   ├── index.css          # Global styles & theme
-│   └── main.tsx           # Entry point
-├── EMAIL_SETUP.md         # Email setup guide
-└── package.json
-```
-
-## Tips
-
-1. **Images**: Add your photo or project screenshots to `public/` folder
-2. **SEO**: Update the title and meta tags in `index.html`
-3. **Analytics**: Add Google Analytics or similar in `index.html`
-4. **Favicon**: Replace `vite.svg` with your own favicon
-
-## License
-
-MIT License - feel free to use this for your own portfolio!
-
-## Support
-
-If you have any questions or need help, feel free to open an issue or reach out.
+### Deploy to Vercel (Recommended)
+1.  Import your GitHub repository on the [Vercel Dashboard](https://vercel.com).
+2.  Configure the environment variables (`VITE_EMAILJS_*`) in the Project Settings under the **Environment Variables** tab.
+3.  Deploy! Vercel will build the Vite bundles and deploy them to a CDN.
 
 ---
 
-Made with ❤️ using React and TypeScript
+## 📄 License
+
+This project is licensed under the MIT License - feel free to use it for your own developer portfolio!
+
+---
+
+*Made with ❤️ by Munish Upadhyay*

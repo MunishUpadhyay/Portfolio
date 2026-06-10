@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { personalInfo } from '../../data/portfolio';
 
@@ -11,6 +11,17 @@ interface HeroProps {
 }
 
 export const Hero = ({ setCurrentPage }: HeroProps) => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section className="relative min-h-[85vh] w-full flex items-center px-6 md:px-12 lg:px-24 overflow-hidden pt-12 md:pt-16 pb-8">
       <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 items-center text-center lg:text-left z-10">
@@ -60,7 +71,7 @@ export const Hero = ({ setCurrentPage }: HeroProps) => {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
             className="text-base md:text-lg text-foreground/80 leading-relaxed mb-12 font-normal lg:max-w-2xl"
           >
             I build high-performance backend systems, real-time data pipelines, and intelligent AI architectures. Specializing in Python, Django, FastAPI, and React, I turn complex engineering challenges into robust, production-grade applications.
@@ -81,20 +92,22 @@ export const Hero = ({ setCurrentPage }: HeroProps) => {
           </motion.div>
         </div>
 
-        {/* Right Column: Interactive 3D Rubik's Cube Model */}
+        {/* Right Column: Interactive 3D Globe Model */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.35 }}
           className="lg:col-span-2 hidden lg:flex items-center justify-center w-full"
         >
-          <Suspense fallback={
-            <div className="w-[300px] h-[300px] flex items-center justify-center rounded-2xl bg-[#0e1026]/40 border-2 border-zinc-800/40 relative overflow-hidden shadow-2xl">
-              <div className="w-8 h-8 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
-            </div>
-          }>
-            <Hero3D />
-          </Suspense>
+          {isDesktop && (
+            <Suspense fallback={
+              <div className="w-[300px] h-[300px] flex items-center justify-center rounded-2xl bg-[#0e1026]/40 border-2 border-zinc-800/40 relative overflow-hidden shadow-2xl">
+                <div className="w-8 h-8 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
+              </div>
+            }>
+              <Hero3D />
+            </Suspense>
+          )}
         </motion.div>
       </div>
 
