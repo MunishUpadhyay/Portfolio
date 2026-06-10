@@ -35,11 +35,11 @@ export const Footer = ({ setCurrentPage }: FooterProps) => {
       {/* Top thin gradient glow line */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
 
-      <div className="max-w-6xl mx-auto px-6 py-8 md:py-10 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 md:gap-6 text-left mb-6 border-b border-zinc-900/50 pb-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-10 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row md:justify-between md:items-start gap-8 md:gap-4 text-left mb-6 border-b border-zinc-900/50 pb-6">
           
           {/* Column 1: Contact Info */}
-          <div className="md:col-span-3 space-y-4">
+          <div className="space-y-4">
             <h4 className="text-base font-extrabold tracking-wider text-purple-400 uppercase">
               Contact Info
             </h4>
@@ -49,7 +49,7 @@ export const Footer = ({ setCurrentPage }: FooterProps) => {
                 className="flex items-center gap-2.5 hover:text-purple-400 hover:translate-x-1 transition-all duration-300 min-w-0"
               >
                 <FiMail className="text-purple-400 shrink-0" />
-                <span className="hover:underline text-xs lg:text-sm whitespace-nowrap">
+                <span className="hover:underline text-[11px] xs:text-xs lg:text-sm whitespace-nowrap">
                   {personalInfo.email}
                 </span>
               </a>
@@ -61,7 +61,7 @@ export const Footer = ({ setCurrentPage }: FooterProps) => {
           </div>
 
           {/* Column 2: Social Links */}
-          <div className="md:col-span-3 space-y-4">
+          <div className="space-y-4">
             <h4 className="text-base font-extrabold tracking-wider text-purple-400 uppercase">
               Social Links
             </h4>
@@ -108,7 +108,7 @@ export const Footer = ({ setCurrentPage }: FooterProps) => {
           </div>
 
           {/* Column 3: Quick Links */}
-          <div className="md:col-span-3 space-y-4">
+          <div className="space-y-4">
             <h4 className="text-base font-extrabold tracking-wider text-purple-400 uppercase">
               Quick Links
             </h4>
@@ -145,7 +145,7 @@ export const Footer = ({ setCurrentPage }: FooterProps) => {
           </div>
 
           {/* Column 4: Explore */}
-          <div className="md:col-span-3 space-y-4">
+          <div className="space-y-4">
             <h4 className="text-base font-extrabold tracking-wider text-purple-400 uppercase">
               Explore
             </h4>
