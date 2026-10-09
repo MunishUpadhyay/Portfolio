@@ -113,7 +113,7 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
                   <p className="text-sm font-semibold text-purple-400 mb-2">{experience[0].company}</p>
                   <ul className="list-none space-y-2 text-sm text-foreground/80 leading-relaxed font-normal text-left">
                     {experience[0].description.split('\n').map((bullet, index) => {
-                      const cleanedBullet = bullet.replace(/^[•\s\-*]+/, '').trim();
+                      const cleanedBullet = bullet.replace(/^[•\s-]+/, '').trim();
                       if (!cleanedBullet) return null;
                       return (
                         <li key={index} className="flex items-start gap-2.5">
@@ -260,7 +260,7 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
                       </p>
                       <ul className="list-none space-y-2 text-sm text-foreground/80 leading-relaxed font-normal mb-4 text-left">
                         {job.description.split('\n').map((bullet, index) => {
-                          const cleanedBullet = bullet.replace(/^[•\s\-*]+/, '').trim();
+                          const cleanedBullet = bullet.replace(/^[•\s-]+/, '').trim();
                           if (!cleanedBullet) return null;
                           return (
                             <li key={index} className="flex items-start gap-2.5">

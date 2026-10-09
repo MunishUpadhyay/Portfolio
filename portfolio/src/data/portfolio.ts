@@ -119,9 +119,9 @@ export const experience = [
     company: 'Coding Jr.',
     location: 'Remote',
     period: 'June 2025 – November 2025',
-    description: `• **Model Development** — Built and compared customer-churn classification models using Python, Pandas, and Scikit-learn, applying feature engineering and RandomizedSearchCV. Gradient Boosting achieved a **0.8458 ROC-AUC score** in 5-fold stratified cross-validation.
-• **Model Optimization** — Gradient Boosting achieved **74.60% recall** and a **0.632 F1-score** on held-out test data, compared with **51.34% recall** and a **0.572 F1-score** for the Logistic Regression baseline, improving detection of potential churners.
-• **Model Serving** — Served predictions through FastAPI with PostgreSQL persistence and Docker, sharing feature-processing logic between training and inference to reduce train–serve skew. Measured a mean API latency of **27.42 ms**.`,
+    description: `• **Model Development** — Built and compared customer-churn classification models using Python, Pandas, and Scikit-learn, applying feature engineering and RandomizedSearchCV. Gradient Boosting achieved a 0.8458 ROC-AUC score in 5-fold stratified cross-validation.
+• **Model Optimization** — Gradient Boosting achieved 74.60% recall and a 0.632 F1-score on held-out test data, compared with 51.34% recall and a 0.572 F1-score for the Logistic Regression baseline, improving detection of potential churners.
+• **Model Serving** — Served predictions through FastAPI with PostgreSQL persistence and Docker, sharing feature-processing logic between training and inference to reduce train–serve skew. Measured a mean API latency of 27.42 ms.`,
     tech: ['Python', 'Scikit-learn', 'Pandas', 'FastAPI', 'PostgreSQL', 'Docker', 'Machine Learning']
   }
 ];
