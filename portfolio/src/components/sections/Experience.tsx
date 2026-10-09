@@ -8,6 +8,20 @@ interface ExperienceProps {
   setCurrentPage?: (page: PageType) => void;
 }
 
+const renderFormattedText = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={i} className="font-semibold text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+};
+
 export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps) => {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,7 +104,9 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
                   <h3 className="text-base font-bold text-white">Latest Experience</h3>
                 </div>
                 <div className="relative z-10">
-                  <span className="text-xs text-foreground/50 block mb-1">{experience[0].period}</span>
+                  <span className="text-xs text-foreground/50 block mb-1">
+                    {experience[0].period}{experience[0].location ? ` • ${experience[0].location}` : ''}
+                  </span>
                   <h4 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors">
                     {experience[0].role}
                   </h4>
@@ -102,7 +118,7 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
                       return (
                         <li key={index} className="flex items-start gap-2.5">
                           <span className="mt-2 w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
-                          <span>{cleanedBullet}</span>
+                          <span>{renderFormattedText(cleanedBullet)}</span>
                         </li>
                       );
                     })}
@@ -234,7 +250,7 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
 
                     <div className="relative z-10">
                       <span className="text-xs md:text-sm text-foreground/50 block mb-1">
-                        {job.period}
+                        {job.period}{job.location ? ` • ${job.location}` : ''}
                       </span>
                       <h4 className="text-base md:text-lg font-bold text-white group-hover:text-purple-400 transition-colors">
                         {job.role}
@@ -249,7 +265,7 @@ export const Experience = ({ preview = false, setCurrentPage }: ExperienceProps)
                           return (
                             <li key={index} className="flex items-start gap-2.5">
                               <span className="mt-2 w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
-                              <span>{cleanedBullet}</span>
+                              <span>{renderFormattedText(cleanedBullet)}</span>
                             </li>
                           );
                         })}

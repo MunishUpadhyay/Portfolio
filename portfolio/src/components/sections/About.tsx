@@ -36,7 +36,7 @@ export const About = ({ preview = false, setCurrentPage }: AboutProps) => {
         role: personalInfo.role,
         focus: "Production-grade Backend Systems & Generative AI",
         education: "VIT Bhopal University (CSE, 2023 - 2027)",
-        current_gpa: "9.13 / 10.0"
+        current_gpa: "9.17 / 10.0"
       }, null, 2)
     },
     skills: {
@@ -164,7 +164,7 @@ ranking: Top 25% of active monthly coders`
                 <div>
                   <h5 className="text-base font-extrabold text-white">VIT Bhopal University</h5>
                   <p className="text-sm text-foreground/75 mt-1 font-normal">B.Tech in Computer Science & Engineering</p>
-                  <p className="text-xs text-purple-400 font-bold mt-0.5">CGPA: 9.13 / 10.0</p>
+                  <p className="text-xs text-purple-400 font-bold mt-0.5">CGPA: 9.17 / 10.0</p>
                 </div>
                 <span className="text-xs font-semibold text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-lg shrink-0">
                   Sept 2023 - May 2027
@@ -252,7 +252,7 @@ ranking: Top 25% of active monthly coders`
                   Grade / CGPA
                 </span>
                 <span className="text-2xl md:text-3xl font-black text-white block mb-1">
-                  9.13 / 10.0
+                  9.17 / 10.0
                 </span>
                 <span className="text-xs text-purple-400 font-semibold truncate w-full">
                   VIT Bhopal (CSE)

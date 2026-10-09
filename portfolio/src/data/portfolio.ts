@@ -81,8 +81,8 @@ export const education = [
     period: 'Sep 2023 – May 2027',
     degree: 'B.Tech in Computer Science & Engineering',
     institution: 'VIT Bhopal University',
-    field: 'CGPA: 9.13',
-    cgpa: '9.13 CGPA',
+    field: 'CGPA: 9.17',
+    cgpa: '9.17 CGPA',
     coursework: 'Data Structures & Algorithms, OOP, DBMS, Operating Systems, Computer Networks, Software Engineering, Machine Learning, Artificial Intelligence'
   },
   {
@@ -105,11 +105,24 @@ export const education = [
 
 export const experience = [
   {
-    role: 'Artificial Intelligence Intern',
+    role: 'AI Engineer Intern',
+    company: 'My Coffee Co.',
+    location: 'Remote',
+    period: 'September 2026 – Present',
+    description: `• **Voice Platform Engineering** — Building a multilingual customer-support calling platform using FastAPI and Plivo, integrated with existing Node.js business services and PostgreSQL. The platform supports English/Hindi IVR, DTMF-based complaint intake, caller identification, and human-agent routing.
+• **Voice Intelligence** — Developing asynchronous post-call processing with Celery, Redis, Azure Blob Storage, and Sarvam Saaras speech-to-text. LLM-powered analysis processes call recordings and transcripts into speaker-diarized conversations and post-call insights.
+• **Backend Reliability** — Integrating telephony and business logic through authenticated service APIs and webhooks, with session-state management, retry handling, and idempotent complaint creation to support reliable workflows.`,
+    tech: ['FastAPI', 'Plivo', 'Node.js', 'PostgreSQL', 'Celery', 'Redis', 'Azure Blob Storage', 'LLMs', 'Speech-to-Text', 'Webhooks']
+  },
+  {
+    role: 'ML Engineer Intern',
     company: 'Coding Jr.',
-    period: 'Jun 2025 – Aug 2025',
-    description: '• Designed and optimized supervised machine learning models using Python, Scikit-learn, and Pandas for feature engineering, preprocessing, and hyperparameter tuning, achieving up to 15% accuracy improvement.\n• Deployed and served trained models as scalable RESTful APIs on Render and AWS, reducing inference latency by 30% and enabling production-grade, low-latency model deployment for end users.\n• Engineered automated model evaluation pipelines using Python, Scikit-learn, and Jupyter Notebooks, cutting manual QA time by 40% and accelerating research-to-deployment cycles.\n• Managed version control using Git/GitHub; converted 3 research prototypes into production-ready deployments within an Agile sprint workflow, improving team delivery velocity by 20%.',
-    tech: ['Python', 'Scikit-learn', 'Machine Learning', 'AWS', 'REST APIs', 'Render', 'Agile']
+    location: 'Remote',
+    period: 'June 2025 – November 2025',
+    description: `• **Model Development** — Built and compared customer-churn classification models using Python, Pandas, and Scikit-learn, applying feature engineering and RandomizedSearchCV. Gradient Boosting achieved a **0.8458 ROC-AUC score** in 5-fold stratified cross-validation.
+• **Model Optimization** — Gradient Boosting achieved **74.60% recall** and a **0.632 F1-score** on held-out test data, compared with **51.34% recall** and a **0.572 F1-score** for the Logistic Regression baseline, improving detection of potential churners.
+• **Model Serving** — Served predictions through FastAPI with PostgreSQL persistence and Docker, sharing feature-processing logic between training and inference to reduce train–serve skew. Measured a mean API latency of **27.42 ms**.`,
+    tech: ['Python', 'Scikit-learn', 'Pandas', 'FastAPI', 'PostgreSQL', 'Docker', 'Machine Learning']
   }
 ];
 
